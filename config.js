@@ -431,11 +431,7 @@ module.exports = kconfig = async (kill, message) => {
             } else return kill.reply(from, mess.onlyimg(), id)
             break
 			
-		// LEMBRE-SE, REMOVER CRÈDITO È CRIME E PROIBIDO
-		case 'about':
-			await kill.sendFile(from, './lib/media/img/iris.png', 'iris.png', mess.about(), id)
-			break
-			
+		
 			
         case 'nobg':
 			if (isMedia && type === 'image' || isQuotedImage) {
@@ -447,7 +443,7 @@ module.exports = kconfig = async (kill, message) => {
 				const outFile = `./lib/media/img/${user.replace('@c.us', '')}noBg.png`
 				var result = await removeBackgroundFromImageBase64({ base64img, apiKey: config.nobg, size: 'auto', type: 'auto', outFile })
 				await fs.writeFile(outFile, result.base64img)
-				await kill.sendImageAsSticker(from, `data:${nobgmd.mimetype};base64,${result.base64img}`, { author: '🎁 https://bit.ly/30t4jJV ☆', pack: '🔰 Iris/Legião Z ⚜️', keepScale: true })
+				await kill.sendImageAsSticker(from, `data:${nobgmd.mimetype};base64,${result.base64img}`, { author: '🎁 https://wa.me/5516993761686 ☆', pack: 'Asta BOT ☆', keepScale: true })
 				await kill.reply(from, mess.nobgms(), id)
 				fs.unlinkSync(`./lib/media/img/${user.replace('@c.us', '')}noBg.png`)
             } else return kill.reply(from, mess.onlyimg(), id)
@@ -467,43 +463,13 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'simg':
-            if (isMedia && type === 'image' || isQuotedImage) {
-                const shimgoh = isQuotedImage ? quotedMsg : message
-                const mediaData = await decryptMedia(shimgoh, uaOverride)
-				await kill.reply(from, mess.wait(), id)
-				const sImgUp = await upload(mediaData, false)
-				var titleS = `🔎 「 Google Imagens 」 🔎\n\n`
-				const sendres = async (results) => {
-					for (let i = 1; i < results.length; i++) { titleS += `${results[i].title}\n${results[i].url}\n\n══════════════════════════════\n\n` }
-					await kill.reply(from, titleS, id)
-				}
-				await sleep(10000)
-				const resimg = await imgsearch(sImgUp, sendres)
-				.catch(() => { kill.reply(from, mess.upfail(), id) })
-			} else return kill.reply(from, mess.onlyimg(), id)
-			break
+		
 			
 			
-		case 'upimg':
-            if (isMedia && type === 'image' || isQuotedImage) {
-                const upimgoh = isQuotedImage ? quotedMsg : message
-                const mediaData = await decryptMedia(upimgoh, uaOverride)
-                const upImg = await upload(mediaData, false)
-				await kill.reply(from, mess.tempimg(upImg), id)
-				.catch(() => { kill.reply(from, mess.upfail(), id) })
-			} else return kill.reply(from, mess.onlyimg(), id)
-			break
+		
 			
 			
-        case 'getsticker':
-            if (args.length == 0) return kill.reply(from, mess.noargs() + 'palavras/words/números/numbers.', id)
-			const stkm = await fetch(`https://api.fdci.se/sosmed/rep.php?gambar=${encodeURIComponent(body.slice(12))}`)
-			const stimg = await stkm.json()
-			let stkfm = stimg[Math.floor(Math.random() * stimg.length) + 1]
-			await kill.sendStickerfromUrl(from, stkfm, { method: 'get' }, { author: config.author, pack: config.pack, keepScale: true })
-            break
-			
+      
 			
 		case 'morte':
 		case 'death':
@@ -565,37 +531,7 @@ module.exports = kconfig = async (kill, message) => {
 			await kill.reply(from, mess.contar(body, args), id)
 			break
 			
-			
-        case 'giphy':
-            if (args.length !== 1) return kill.reply(from, mess.nolink(), id)
-            const isGiphy = url.match(new RegExp(/https?:\/\/(www\.)?giphy.com/, 'gi'))
-            const isMediaGiphy = url.match(new RegExp(/https?:\/\/media.giphy.com\/media/, 'gi'))
-            if (isGiphy) {
-                const getGiphyCode = url.match(new RegExp(/(\/|\-)(?:.(?!(\/|\-)))+$/, 'gi'))
-                if (!getGiphyCode) { return kill.reply(from, mess.fail() + '\n\nGiphy site error.', id) }
-                const giphyCode = getGiphyCode[0].replace(/[-\/]/gi, '')
-                const smallGifUrl = 'https://media.giphy.com/media/' + giphyCode + '/giphy-downsized.gif'
-                await kill.sendGiphyAsSticker(from, smallGifUrl)
-            } else if (isMediaGiphy) {
-                const gifUrl = url.match(new RegExp(/(giphy|source).(gif|mp4)/, 'gi'))
-                if (!gifUrl) { return kill.reply(from, mess.fail() + '\n\nGiphy site error.', id) }
-                const smallGifUrl = url.replace(gifUrl[0], 'giphy-downsized.gif')
-                await kill.sendGiphyAsSticker(from, smallGifUrl)
-            } else return kill.reply(from, mess.nolink(), id)
-            break
-			
-			
-		case 'msg':
-            if (args.length == 0) return kill.reply(from, mess.noargs() + 'palavras/words/números/numbers.', id)
-			await kill.sendText(from, `${body.slice(5)}`)
-			break
-			
-			
-		case 'id':
-			if (!isGroupMsg) return kill.reply(from, mess.sogrupo(), id)
-			await kill.reply(from, mess.idgrupo(groupId), id)
-			break
-			
+		
 			
         case 'fake':
 			if (isGroupMsg && isGroupAdmins || isGroupMsg && isOwner) {
@@ -659,11 +595,7 @@ module.exports = kconfig = async (kill, message) => {
 			} else return kill.reply(from, mess.kldica1(), id)
 			break
 			
-		 // LEMBRE-SE, REMOVER CREDITO E CRIME E PROIBIDO	
-		case 'legiao':
-			if (isGroupMsg) return kill.reply(from, mess.sopv(), id)
-			await kill.sendLinkWithAutoPreview(from, 'https://chat.whatsapp.com/H53MdwhtnRf7TGX1VJ2Jje', 'S2')
-			break
+		
 			
 			
 		case 'revoke':
@@ -719,7 +651,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'img':
+		case 'toimg':
             if (isQuotedSticker) {
 				await kill.reply(from, mess.wait(), id)
 				const mediaData = await decryptMedia(quotedMsg, uaOverride)
@@ -771,20 +703,9 @@ module.exports = kconfig = async (kill, message) => {
             await kill.sendFileFromUrl(from, flyaoi, '', 'Tururu...', id)
             break
 			
-		// Adicione mais no arquivo fml.txt na pasta config, obs, em inglês
-        case 'life':
-			const fml = fs.readFileSync('./lib/config/Utilidades/fml.txt').toString().split('\n')
-			const fmylife = fml[Math.floor(Math.random() * fml.length)]
-			if (config.lang == 'en') return kill.reply(from, fmylife, id)
-			await sleep(5000)
-			translate(fmylife, config.lang).then((lfts) => kill.reply(from, lfts, id))
-			break
+		
 			
-			
-        case 'fox':
-            const fox = await axios.get(`https://some-random-api.ml/img/fox`)
-			await kill.sendFileFromUrl(from, fox.data.link, ``, '🥰', id)
-			break
+       k
 			
 			
         case 'wiki':
@@ -796,19 +717,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-        case 'nasa':
-        	if (args[0] == '-data') {
-            	const nasa = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${encodeURIComponent(args[1])}`)
-				if (config.lang == 'en') return kill.sendFileFromUrl(from, `${nasa.data.url}`, '', `${nasa.data.date} → ${nasa.data.title}\n\n ${nasa.data.explanation}`, id)
-				await sleep(4000)
-            	translate(nasa.data.explanation, config.lang).then((result) => kill.sendFileFromUrl(from, `${nasa.data.url}`, '', `${nasa.data.date} → ${nasa.data.title}\n\n ${result}`, id))
-			} else {
-            	const nasa = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY`)
-				if (config.lang == 'en') return kill.sendFileFromUrl(from, `${nasa.data.url}`, '', `${nasa.data.date} → ${nasa.data.title}\n\n ${nasa.data.explanation}`, id)
-				await sleep(4000)
-            	translate(nasa.data.explanation, 'pt').then((result) => kill.sendFileFromUrl(from, `${nasa.data.url}`, '', `${nasa.data.date} → ${nasa.data.title}\n\n ${result}`, id))
-			}
-			break
+       
 			
 			
         case 'stalkig':
@@ -820,15 +729,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'fatos':
-			var anifac = ["dog", "cat", "bird", "panda", "fox", "koala"];
-			var tsani = anifac[Math.floor(Math.random() * anifac.length)];
-			const animl = await axios.get(`https://some-random-api.ml/facts/${tsani}`)
-			if (config.lang == 'en') return kill.reply(from, animl.data.fact, id)
-			await sleep(5000)
-            translate(animl.data.fact, 'pt').then((result) => kill.reply(from, result, id))
-			break
-			
+		
 			
 		case 'sporn':
 			if (isGroupMsg && !isNsfw) return kill.reply(from, mess.gpadulto(), id)
@@ -927,16 +828,8 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'qr':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'palavras/words/números/numbers.', id)
-			await kill.sendFileFromUrl(from, `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${body.slice(4)}`, '', mess.maked(), id)
-			break
-			
-			
-		case 'send':
-			if (args.length == 0 || !isUrl(url)) return kill.reply(from, mess.nolink(), id)
-			await kill.sendFileFromUrl(from, url, '', '', id).catch(() => kill.reply(from, mess.onlyimg(), id))
-			break
+		
+		
 			
 			
         case 'quote':
@@ -1000,7 +893,7 @@ module.exports = kconfig = async (kill, message) => {
 			
 			
         case 'criador':
-			await kill.reply(from, `☀️ - Host: https://wa.me/${config.owner.replace('@c.us', '')}\n🌙 - Dev: https://wa.me/5518998044132`, id)
+			await kill.reply(from, `🌙 - Dev: https://wa.me/5516993761686`, id)
             break
 			
 			
@@ -1032,94 +925,16 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-        case 'iris':
-			try {
-				if (args[0] == '-g') {
-					exec(`cd lib/config/Utilidades && bash -c 'grep -i "${args[1]}" reply.txt | shuf -n 1'`, async (error, stdout, stderr) => {
-						if (error || stderr || stdout == null || stdout == '') {
-							await kill.reply(from, chatBotR, id)
-						} else return kill.reply(from, stdout, id)
-					})
-				} else {
-					const iris = await axios.get(`http://simsumi.herokuapp.com/api?text=${encodeURIComponent(body.slice(6))}&lang=${config.lang}`)
-					if (iris.data.success == 'Limit 50 queries per hour.' || iris.data.success == '' || iris.data.success == null) {
-						await kill.reply(from, chatBotR, id)
-					} else {
-						if (iris.data.success == 'Curta a pagina Gamadas por Bieber no facebook ;)') return kill.reply(from, 'Oi sua gostosa, como vai?', id)
-						await kill.reply(from, iris.data.success, id)
-						fs.appendFile('./lib/config/Utilidades/reply.txt', `\n${iris.data.success}`)
-					}
-				}
-			} catch (error) { 
-				await kill.reply(from, chatBotR, id)
-				console.log(color('[IRIS]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
+
 			
 			
-        case 'speak':
-			const sppt = require('node-gtts')(config.lang)
-			try {
-				if (args[0] == '-g') {
-					exec(`cd lib/config/Utilidades && bash -c 'grep -i "${args[1]}" reply.txt | shuf -n 1'`, (error, stdout, stderr) => {
-						if (error || stderr || stdout == null || stdout == '') {
-							sppt.save('./lib/media/audio/resPtm.mp3', chatBotR, async function () { await kill.sendPtt(from, './lib/media/audio/resPtm.mp3', id) })
-						} else { sppt.save('./lib/media/audio/resPtm.mp3', stdout, async function () { await kill.sendPtt(from, './lib/media/audio/resPtm.mp3', id) }) }
-					})
-				} else {
-					const spiris = await axios.get(`http://simsumi.herokuapp.com/api?text=${encodeURIComponent(body.slice(7))}&lang=${config.lang}`)
-					const a = spiris.data.success
-					if (a == 'Limit 50 queries per hour.' || a == '' || a == null) {
-						sppt.save('./lib/media/audio/resPtm.mp3', chatBotR, async function () { await kill.sendPtt(from, './lib/media/audio/resPtm.mp3', id) })
-					} else {
-						sppt.save('./lib/media/audio/resPtm.mp3', a, async function () {
-							await kill.sendPtt(from, './lib/media/audio/resPtm.mp3', id)
-							fs.appendFile('./lib/config/Utilidades/reply.txt', `\n${a}`)
-						})
-					}
-				}
-			} catch (error) {
-				sppt.save('./lib/media/audio/resPtm.mp3', chatBotR, async function () { await kill.sendPtt(from, './lib/media/audio/resPtm.mp3', id) })
-				console.log(color('[SPEAK]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
+     
 			
 			
-        case 'curiosidade':
-			const rcurio = fs.readFileSync('./lib/config/Utilidades/curiosidades.txt').toString().split('\n')
-			const rsidd = rcurio[Math.floor(Math.random() * rcurio.length)]
-			try {
-				if (args[0] == '-g') {
-					exec(`cd lib/config/Utilidades && bash -c 'grep -i "${args[1]}" curiosidades.txt | shuf -n 1'`, async (error, stdout, stderr) => {
-						if (error || stderr || stdout == null || stdout == '') {
-							await kill.reply(from, rsidd, id)
-						} else return kill.reply(from, stdout, id)
-					})
-				} else return kill.reply(from, rsidd, id)
-			} catch (error) { 
-				await kill.reply(from, rsidd, id)
-				console.log(color('[CURIOSIDADE]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
+      
 			
 			
-        case 'trecho':
-			const rcit = fs.readFileSync('./lib/config/Utilidades/frases.txt').toString().split('\n')
-			const racon = rcit[Math.floor(Math.random() * rcit.length)]
-			try {
-				if (args[0] == '-g') {
-					exec(`cd lib/config/Utilidades && bash -c 'grep -i "${args[1]}" frases.txt | shuf -n 1'`, async (error, stdout, stderr) => {
-						if (error || stderr || stdout == null || stdout == '') {
-							await kill.reply(from, racon, id)
-						} else return kill.reply(from, stdout, id)
-					})
-				} else return kill.reply(from, racon, id)
-			} catch (error) { 
-				await kill.reply(from, rsidd, id)
-				console.log(color('[TRECHO]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
-			
+     
 			
         case 'roll':
             const dice = Math.floor(Math.random() * 6) + 1
@@ -1294,11 +1109,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'ball':
-			const ball = await axios.get('https://nekos.life/api/v2/img/8ball')
-			await kill.sendStickerfromUrl(from, ball.data.url, { method: 'get' }, { author: config.author, pack: config.pack, keepScale: true })
-			break
-			
+		
 			
 		case 'cafune':
     	    const rcafune = ["https://nekos.life/api/v2/img/pat", "https://nekos.life/api/v2/img/cuddle"];
@@ -1311,19 +1122,10 @@ module.exports = kconfig = async (kill, message) => {
 			break			
 			
 			
-		case 'quack':
-			const patu = await axios.get('https://nekos.life/api/v2/img/goose')
-			await kill.sendFileFromUrl(from, patu.data.url, '', '', id)
-			break
+		
 			
 			
-		case 'poke':
-			const pokean = await axios.get('https://nekos.life/api/v2/img/poke')
-			await axios.get(pokean.data.url, { responseType: 'arraybuffer' }).then(async (response) => {
-				const teco = Buffer.from(response.data, 'binary').toString('base64')
-				await kill.sendImageAsSticker(from, teco, { author: config.author, pack: config.pack, keepScale: true })
-			})
-			break
+		
 			
 			
 		case 'cocegas':
@@ -1353,10 +1155,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'lizard':
-			const lizard = await axios.get('https://nekos.life/api/v2/img/lizard')
-			await kill.sendFileFromUrl(from, lizard.data.url, '', '', id)
-			break
+		
 			
 
         case 'google':
@@ -1388,23 +1187,7 @@ module.exports = kconfig = async (kill, message) => {
 			})
 			break
 			
-			
-		case 'moddroid':
-            if (args.length == 0) return kill.reply(from, mess.noargs() + 'app name/Nome do App/Nombre de aplicación.', id)
-			const moddroid = await axios.get(`https://tobz-api.herokuapp.com/api/moddroid?q=${encodeURIComponent(body.slice(10))}&apikey=BotWeA`)
-			if (moddroid.data.error) return kill.reply(from, moddroid.data.error, id)
-			const modo = moddroid.data.result[0]
-			await kill.sendFileFromUrl(from, `${modo.image}`, 'MODDROID.jpg', mess.modroid(modo), id)
-            break
-			
-			
-        case 'happymod':
-            if (args.length == 0) return kill.reply(from, mess.noargs() + 'app name/Nome do App/Nombre de aplicación.', id)
-			const happymod = await axios.get(`https://tobz-api.herokuapp.com/api/happymod?q=${encodeURIComponent(body.slice(10))}&apikey=BotWeA`)
-			if (happymod.data.error) return kill.reply(from, happymod.data.error, id)
-			const modoz = happymod.data.result[0]
-			await kill.sendFileFromUrl(from, modoz.image, 'HAPPYMOD.jpg', mess.modroid(modoz) + `\n\n• *Root* : ${modoz.root}`, id)
-            break
+		
 			
 			
         case 'girl':
@@ -1439,23 +1222,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-        case 'nh':
-			if (isGroupMsg && !isNsfw) return kill.reply(from, mess.gpadulto(), id)
-			if (args.length == 1) {
-				await kill.reply(from, mess.wait(), id)
-				const cek = await nhentai.exists(args[0])
-				if (cek == true)  {
-					const api = new API()
-					const pic = await api.getBook(args[0]).then(book => { return api.getImageURL(book.cover) })
-					const dojin = await nhentai.getDoujin(args[0])
-					const { title, details, link } = dojin
-					const { parodies, tags, artists, groups, languages, categories } = await details
-					await kill.sendFileFromUrl(from, pic, '', mess.nhentai(title, parodies, tags, artists, groups, languages, categories, link), id)
-					await kill.sendFileFromUrl(from, `https://nhder.herokuapp.com/download/nhentai/${args[0]}/zip`, 'hentai.zip', '', id)
-					.catch(() => kill.reply(from, 'Fail at download', id))
-				} else return await kill.reply(from, mess.noresult(), id) 
-			} else return kill.reply(from, mess.noargs() + '6 digit/digitos (code/código nhentai) (ex: 215600).', id)
-			break
+       
 			
 			
         case 'profile':
@@ -1477,19 +1244,7 @@ module.exports = kconfig = async (kill, message) => {
 				await kill.sendFileFromUrl(from, pfp, 'pfo.jpg', mess.profile(namae, myMsg, adm, muted, blocked, status, peoLevel, peoXp, ineedxp, patente))
 			} else return kill.reply(from, mess.sogrupo(), id)
 			break
-			
-			
-        case 'brainly':
-            if (args.length == 0) return kill.reply(from, mess.noargs() + 'perguntas/preguntas/questions.', id)
-			const question = body.slice(9)
-			if (args.length >= 10) return kill.reply(from, mess.tenargs(), id)
-			var langbl = config.lang
-			if (langbl == 'en') langbl = 'us'
-			brainly(question, 1, config.lang).then(async (res) => {
-				if (res.message == 'Data not found') return kill.reply(from, mess.noresult(), id)
-				await kill.reply(from, mess.brainlyres(res), id)
-			})
-            break
+	
 			
 			
 		case 'store':
@@ -1592,17 +1347,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-        case 'get':
-			if (quotedMsgObj) {
-				let replyOnReply = await kill.getMessageById(quotedMsgObj.id)
-				let obj = replyOnReply.quotedMsgObj
-				if (/ptt|audio|video|image|document|sticker/.test(quotedMsgObj.type)) {
-					if (quotedMsgObj.animated) quotedMsgObj.mimetype = ''
-				} else if (obj && /ptt|audio|video|image/.test(obj.type)) { quotedMsgObj = obj } else return
-				const mediaData = await decryptMedia(quotedMsgObj)
-				await kill.sendFile(from, `data:${quotedMsgObj.mimetype};base64,${mediaData.toString('base64')}`, '', '')
-            } else kill.reply(from, mess.onlymidia(), id)
-            break
+ 
 
 
         case 'adms':
@@ -1670,42 +1415,17 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'sip':
-			if (args.length !== 1) return kill.reply(from, mess.noargs() + 'IPV4 (ex: 8.8.8.8).', id)
-			const ip = await axios.get(`http://ipwhois.app/json/${encodeURIComponent(body.slice(5))}`)
-			if (ip.data.latitude == undefined) return kill.reply(from, mess.noresult(), id)
-			await kill.sendLocation(from, `${ip.data.latitude}`, `${ip.data.longitude}`, '')
-			await kill.reply(from, mess.sip(ip), id)
-			await kill.reply(from, 'Searching place photo - Buscando foto do local...\nEspere - Wait...\n+20S...', id)
-			const browserip = await puppeteer.launch({ 
-				headless: true,
-				defaultViewport: null,
-				args: ['--start-maximized'] 
-			})
-			const pageip = await browserip.newPage()
-			await pageip.goto(`http://www.google.com/maps?layer=c&cbll=${ip.data.latitude},${ip.data.longitude}`, { waitUntil: "networkidle2" }).then(async () => {
-				await sleep(20000)
-				await pageip.screenshot({path: `./lib/media/img/${user.replace('@c.us', '')}ip.png`})
-				browserip.close()
-			})
-			await kill.sendFile(from, `./lib/media/img/${user.replace('@c.us', '')}ip.png`, 'ip.png', 'Maybe here - Talvez aqui! 📍', id)
-			fs.unlinkSync(`./lib/media/img/${user.replace('@c.us', '')}ip.png`)
-			break
+		
 			
 			
-		case 'scep':
-			if (!config.lang == 'pt') return kill.reply(from, 'Brazil only/Brasil solamente!', id)
-			if (args.length !== 1) return kill.reply(from, mess.noargs() + 'CEP (ex: 03624090).', id)
-			const cep = await axios.get(`https://viacep.com.br/ws/${encodeURIComponent(body.slice(6))}/json/`)
-			await kill.reply(from, mess.scep(cep), id)
-			break
+		
 			
 			
-        case 'everyone':
+        case 'marcar':
 			if (isGroupMsg && isGroupAdmins || isGroupMsg && isOwner) {
-				let hehe = `═✪〘 🎸 - 🐂 〙✪═\n═✪〘 🖊️ ${body.slice(10)} 〙✪═\n\n`
+				let hehe = `═✪〘 🎸 LISTA DE CORNOS 🐂 〙✪═\n═✪〘 🖊️ ${body.slice(10)} 〙✪═\n\n`
 				for (let i = 0; i < groupMembers.length; i++) { hehe += `- @${groupMembers[i].id.replace(/@c.us/g, '')}\n` }
-				hehe += '\n═✪〘 ❤️ - BOT Íris - 📢〙✪═'
+				hehe += '\n═✪〘 ❤️ - 𝐀𝐒𝐓𝐀 𝐁𝐎𝐓 - 📢〙✪═'
 				await sleep(2000)
 				await kill.sendTextWithMentions(from, hehe)
 			} else if (isGroupMsg) {
@@ -2152,17 +1872,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'placa':
-			if (!config.lang == 'pt') return kill.reply(from, 'Brazil only/Brasil solamente', id)
-			if (args.length == 0) return kill.reply(from, 'Coloque uma placa para puxar.', id)
-			if (!isGroupMsg) return kill.reply(from, mess.sogrupo(), id)
-			sinesp.search(`${args[0]}`).then(async (dados) => {
-				await kill.reply(from, `Placa: ${dados.placa}\n\nSituação: ${dados.situacao}\n\nModelo: ${dados.modelo}\n\nMarca: ${dados.marca}\n\nCor: ${dados.cor}\n\nAno: ${dados.ano}\n\nAno do modelo: ${dados.anoModelo}\n\nEstado: ${dados.uf}\n\nMunicipio: ${dados.municipio}\n\nChassi: ${dados.chassi}.`, id)
-			}).catch(async (err) => {
-				await kill.reply(from, 'Nenhuma placa encontrada.', id)
-				console.log(color('[SINESP]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error} - Você pode ignorar.`, 'gold'))
-			})
-			break
+		
 			
 			
 		case 'phcom':
@@ -2195,37 +1905,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-        case 'enviar':
-            if (args.length == 0 || !arks.includes('|')) return kill.reply(from, mess.noargs() + 'palavras/words/números/numbers.' + '\n\n' + mess.argsbar() + 'use 1 "|".', id)
-			const gid = isGroupMsg ? groupId.replace('@g.us', '') : user.replace('@c.us', '')
-			const nofsender = isGroupMsg ? name : pushname
-			const gporpv = isGroupMsg ? '-gp' : '-pv'
-			try {
-				const sendAFile = async (quotedMsgObj, args, type, nofsender) => {
-					let replyOnReply = await kill.getMessageById(quotedMsgObj.id)
-					let obj = replyOnReply.quotedMsgObj
-					if (/ptt|audio|video|image|document|sticker/.test(quotedMsgObj.type)) {
-						if (quotedMsgObj.animated) quotedMsgObj.mimetype = ''
-					} else if (obj && /ptt|audio|video|image/.test(obj.type)) { quotedMsgObj = obj } else return
-					const mediaData = await decryptMedia(quotedMsgObj)
-					await kill.sendFile(`${args[1]}` + type, `data:${quotedMsgObj.mimetype};base64,${mediaData.toString('base64')}`, '', `De/From ${nofsender}`)
-				}
-				if (args[0] == '-gp') {
-					await kill.sendText(`${args[1]}` + '@g.us', `_Mensagem >_\n"${arg.split('|')[1]} "` + '\n\n_Quem enviou =_ ' + '\n*"' + nofsender + '"*' + '\n\n_Como responder:_')
-					await kill.sendText(`${args[1]}` + '@g.us', `${prefix}enviar ${gporpv} ${gid} | Coloque sua resposta aqui`)
-					await kill.reply(from, mess.maked(), id)
-					if (quotedMsgObj) { sendAFile(quotedMsgObj, args, '@g.us', nofsender) }
-				} else if (args[0] == '-pv') {
-					await kill.sendText(`${args[1]}` + '@c.us', `_Mensagem >_\n"${arg.split('|')[1]}"` + '\n\n_Quem enviou =_ ' + '*' + nofsender + '*' + '\n\n_Como responder:_')
-					await kill.sendText(`${args[1]}` + '@c.us', `${prefix}enviar ${gporpv} ${gid} | Coloque sua resposta aqui`)
-					await kill.reply(from, mess.maked(), id)
-					if (quotedMsgObj) { sendAFile(quotedMsgObj, args, '@c.us', nofsender) }
-				} else return kill.reply(from, mess.enviar(), id)
-			} catch (error) {
-				await kill.reply(from, mess.noctt(), id)
-				console.log(color('[ENVIAR]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
+       
 			
         case 'blocklist':
             if (!isOwner) return kill.reply(from, mess.sodono(), id)
@@ -2302,11 +1982,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-        case 'dva':
-			if (isGroupMsg && !isNsfw) return kill.reply(from, mess.gpadulto(), id)
-            const dva = await axios.get('https://api.computerfreaker.cf/v1/dva')
-            await kill.sendFileFromUrl(from, `${dva.data.url}`, `dva.jpg`, `😍`, id)
-            break
+        
 			
 			
         case 'waifu':
@@ -2511,10 +2187,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'face':
-			const gasm = await axios.get('https://nekos.life/api/v2/img/gasm')
-			await kill.sendImageAsSticker(from, gasm.data.url, { author: config.author, pack: config.pack, keepScale: true })
-			break
+		
 			
 			
 		case 'pezinho':
@@ -2534,18 +2207,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'gamemode':
-			if (args.length == 0) return kill.reply(from, mess.cors(), id)
-			if (args[0] == '0' || args[0] == 's' || args[0] == 'survival') {
-				await kill.sendTextWithMentions(from, mess.creative(user) + 'survival.')
-			} else if (args[0] == '1' || args[0] == 'c' || args[0] == 'creative') {
-				await kill.sendTextWithMentions(from, mess.mine(user) + 'creative.')
-			} else if (args[0] == '2' || args[0] == 'a' || args[0] == 'adventure') {
-				await kill.sendTextWithMentions(from, mess.mine(user) + 'adventure.')
-			} else if (args[0] == '3' || args[0] == 'spectator') {
-				await kill.sendTextWithMentions(from, mess.mine(user) + 'espectador.')
-			} else return kill.reply(from, mess.cors(), id)
-            break
+		
 			
 			
         case 'ihentai':
@@ -2593,25 +2255,10 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'valor':
-			if (args.length !== 2) return kill.reply(from, mess.moneyerr(), id)
-			const money = await axios.get(`https://${encodeURIComponent(args[0])}.rate.sx/${encodeURIComponent(args[1])}`)
-			const chkmy = money.data
-			if (isNaN(chkmy)) return kill.reply(from, mess.moneyerr(), id)
-			await kill.reply(from, `*${args[1]}* → *${money.data}* ${args[0]}`, id)
-			break
+		
 			
 			
-        case 'dog':
-		    if (double == 1) {
-				const list = await axios.get('http://shibe.online/api/shibes')
-				const doguin = list.data[0]
-				await kill.sendFileFromUrl(from, doguin, '', '🐕', id)
-			} else if (double == 2) {
-				const doug = await axios.get('https://nekos.life/api/v2/img/woof')
-				await kill.sendFileFromUrl(from, doug.data.url, '', '🐕', id)
-			}
-            break
+        
 			
 			
         case 'look' :
@@ -2647,26 +2294,13 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-        case 'gato':
-        case 'cat':
-			if (args.length !== 2 || isNaN(args[0]) || isNaN(args[1])) {
-				const catu = await axios.get('https://nekos.life/api/v2/img/meow')
-				await kill.sendFileFromUrl(from, catu.data.url, 'gato.jpg', mess.cats(), id)
-			} else { await kill.sendFileFromUrl(from, `https://placekitten.com/${args[0]}/${args[1]}`, 'neko.png', 'Nekooo', id) }
-            break
+       
 			
 			
-        case 'pokemon':
-            pokem = Math.floor(Math.random() * 898) + 1;
-            await kill.sendFileFromUrl(from, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/' + pokem + '.png', 'Pokemon.png', '', id)
-            break		
+        		
 			
 			
-        case 'screenshot':
-            if (args.length == 0 || !isUrl(url)) return kill.reply(from, mess.nolink(), id)
-			await kill.sendFileFromUrl(from, `https://api.apiflash.com/v1/urltoimage?access_key=${config.apifla}&url=${url}`, 'ss.jpeg', mess.noporn(), id)
-            break
-			
+      
 			
 		case 'ship':
 			if (isGroupMsg && args.length == 2 && mentionedJidList.length !== 0) { 
@@ -2731,15 +2365,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-        case 'getmeme':
-			var thememer = ''
-			if (config.lang == 'pt') thememer = 'https://meme-api.herokuapp.com/gimme/memesbrasil'
-			if (config.lang == 'en') thememer = 'https://meme-api.herokuapp.com/gimme/memes'
-			if (config.lang == 'es') thememer = 'https://meme-api.herokuapp.com/gimme/SpanishMeme'
-            const response = await axios.get(thememer);
-            await kill.sendFileFromUrl(from, `${response.data.url}`, 'meme.jpg', `${response.data.title}`, id)
-            break
-			
+       
 			
         case 'date':
         case 'data':
@@ -2758,69 +2384,64 @@ module.exports = kconfig = async (kill, message) => {
 			
 			
 		case 'stickers':
-			await kill.sendText(from, mess.stickers())
+			await kill.sendText(from, mess.stickers(pushname, time))
 			break
 			
 			
 		case 'otaku':
-			await kill.sendText(from, mess.anime())
+			await kill.sendText(from, mess.anime(pushname, time))
 			break
 			
 			
 		case 'games':
-			await kill.sendText(from, mess.games())
+			await kill.sendText(from, mess.games(pushname, time))
 			break
 			
 			
         case 'admins':
 			if (!isGroupMsg) return kill.reply(from, mess.sogrupo(), id)
             if (!isGroupAdmins && !isOwner) return kill.reply(from, mess.soademiro(), id)
-            await kill.sendText(from, mess.admins())
+            await kill.sendText(from, mess.admins(pushname, time))
             break
 			
 			
         case 'adult':
             if (isGroupMsg && !isNsfw) return kill.reply(from, mess.gpadulto(), id)
-            await kill.sendText(from, mess.adult())
+            await kill.sendText(from, mess.adult(pushname, time))
             break
 			
 			
         case 'dono':
             if (!isOwner) return kill.reply(from, mess.sodono(), id)
-            await kill.sendText(from, mess.owner())
+            await kill.sendText(from, mess.owner(pushname, time))
             break
 			
 			
         case 'down':
-            await kill.sendText(from, mess.down())
+            await kill.sendText(from, mess.down(pushname, time))
             break
 			
 			
         case 'dados':
-            await kill.sendText(from, mess.dados())
+            await kill.sendText(from, mess.dados(pushname, time))
             break
 			
 			
         case 'midia':
-            await kill.sendText(from, mess.midia())
+            await kill.sendText(from, mess.midia(pushname, time))
             break
 			
 			
         case 'outros':
-            await kill.sendText(from, mess.outros())
+            await kill.sendText(from, mess.outros(pushname, time))
             break
 			
 			
         case 'maker':
-            await kill.sendText(from, mess.maker())
+            await kill.sendText(from, mess.maker(pushname, time))
             break
 			
-		// LEMBRE-SE, REMOVER CRÈDITO È CRIME E PROIBIDO!
-        case 'termos':
-			await kill.sendFile(from, './lib/media/img/licenca.png', 'licenca.png', mess.tos(), id)
-			await kill.sendPtt(from, `./lib/media/audio/termos.mp3`, id)
-            break
-		// NÃO REMOVA ESSA PARTE!
+	
 			
 			
 		case 'cmd':
@@ -2838,41 +2459,10 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'mac':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'mac (ex: 70:B3:D5:03:62:A1).', id)
-			await kill.reply(from, mess.wait(), id)
-			await sleep(3000)
-			const maclk = await axios.get(`https://api.macvendors.com/${encodeURIComponent(body.slice(5))}`)
-			await kill.reply(from, `📱 → ${maclk.data}.`, id)
-			break
+		
 			
 			
-		case 'converter':
-		case 'conv':
-			if (args == 0) return kill.reply(from, mess.conv(), id)
-			try {
-				if (args[0] == '-f') {
-					if (isNaN(args[1])) return kill.reply(from, mess.onlynumber(), id)
-					const cels = args[1] / 5 * 9 + 32
-					await kill.reply(from, `*${args[1]}* _C° - Celsius =_ ${cels} _F° - Fahrenheit._`, id)
-				} else if (args[0] == '-c') {
-					if (isNaN(args[1])) return kill.reply(from, mess.onlynumber(), id)
-					const fahf = 5 * (args[1] - 32) / 9
-					await kill.reply(from, `*${args[1]}* _F° - Fahrenheit =_ *${fahf}* _C° - Celsius._`, id)
-				} else if (args[0] == '-m') {
-					if (isNaN(args[1])) return kill.reply(from, mess.onlynumber(), id)
-					const ktom = args[1] * 0.62137
-					await kill.reply(from, `*${args[1]}* _KM =_ *${ktom}* _MI._`, id)
-				} else if (args[0] == '-q') {
-					if (isNaN(args[1])) return kill.reply(from, mess.onlynumber(), id)
-					const mtok = args[1] / 0.62137
-					await kill.reply(from, `*${args[1]}* _MI =_ *${mtok}* _KM._`, id)
-				} else return kill.reply(from, mess.conv(), id)
-			} catch (error) { 
-				await kill.reply(from, mess.onlynumber(), id)
-				console.log(color('[CONVERSOR]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
+		
 			
 			
         case 'mute':
@@ -2892,20 +2482,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'scnpj':
-			if (!config.lang == 'pt') return kill.reply(from, 'Brazil only/Brasil solamente!', id)
-			if (args.length == 1) {
-				const cnpj = await axios.get(`https://www.receitaws.com.br/v1/cnpj/${encodeURIComponent(body.slice(7))}`)
-				if (cnpj.data.status == 'ERROR') return kill.reply(from, cnpj.data.message, id)
-				await kill.reply(from, `✪ CNPJ: ${cnpj.data.cnpj}\n\n✪ Tipo: ${cnpj.data.tipo}\n\n✪ Nome: ${cnpj.data.nome}\n\n✪ Região: ${cnpj.data.uf}\n\n✪ Telefone: ${cnpj.data.telefone}\n\n✪ Situação: ${cnpj.data.situacao}\n\n✪ Bairro: ${cnpj.data.bairro}\n\n✪ Logradouro: ${cnpj.data.logradouro}\n\n✪ CEP: ${cnpj.data.cep}\n\n✪ Casa N°: ${cnpj.data.numero}\n\n✪ Municipio: ${cnpj.data.municipio}\n\n✪ Abertura: ${cnpj.data.abertura}\n\n✪ Fantasia: ${cnpj.data.fantasia}\n\n✪ Jurisdição: ${cnpj.data.natureza_juridica}`, id)
-            } else return kill.reply(from, 'Especifique um CNPJ sem os traços e pontos.', id)
-			break
-			
-			
-		case 'coins':
-			await kill.sendText(from, mess.coins())
-			break
-			
+		
 			
         case 'mutepv':
 			if (args.length == 0) return kill.reply(from, mess.kldica2(), id)
@@ -2974,13 +2551,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'allid':
-		case 'grupos':
-			const gpids = await kill.getAllGroups()
-			let idmsgp = ''
-			for (let ids of gpids) { idmsgp += `➸ ${ids.contact.name} =\n${ids.contact.id.replace(/@g.us/g,'')}\n\n` }
-			await kill.reply(from, idmsgp, id)
-			break
+		
 			
 			
 		case 'help':
@@ -3060,28 +2631,11 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'ativos':
-            if (!isGroupMsg) return kill.reply(from, mess.sogrupo(), id)
-			msgcount.sort((a, b) => (a.msg < b.msg) ? 1 : -1)
-            let active = '-----[ *RANKING DOS ATIVOS* ]----\n\n'
-            try {
-                for (let i = 0; i < 10; i++) {
-					const aRandVar = await kill.getContact(msgcount[i].id)
-					var getPushname = aRandVar.pushname
-					if (getPushname == null) getPushname = 'wa.me/' + msgcount[i].id.replace('@c.us', '')
-					active += `${i + 1} → *${getPushname}*\n➸ *Mensagens*: ${msgcount[i].msg}\n\n`
-				}
-                await kill.sendText(from, active)
-            } catch (error) { 
-				await kill.reply(from, mess.tenpeo(), id)
-				console.log(color('[ATIVOS]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-            break
-			
+		
 			
 		case 'geral':
             if (!isGroupMsg) return kill.reply(from, mess.sogrupo(), id)
-            let geralRank = `-----[ *${name}* ]----\n\n`
+            let geralRank = `-----[ *RANKING ${name}* ]----\n\n`
             try {
                 for (let i = 0; i < groupMembers.length; i++) {
 					const bRandV = await kill.getContact(groupMembers[i].id)
@@ -3240,9 +2794,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'marcar':
-			await kill.sendTextWithMentions(from, `@${user.replace('@c.us', '')}`)
-			break
+		
 			
 			
 		case 'nivel':
@@ -3264,23 +2816,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-        case 'reedit':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'subreddit name/nombre/nome.', id)
-			try {
-				await kill.reply(from, mess.wait(), id)
-				const reed = await axios.get(`https://meme-api.herokuapp.com/gimme/${encodeURIComponent(body.slice(8))}`)
-				if (reed.data.nsfw == false || !isGroupMsg) {
-					await kill.sendFileFromUrl(from, reed.data.url, '', reed.data.title, id)
-				} else {
-					if (isGroupMsg && !isNsfw) {
-						await kill.reply(from, mess.gpadulto(), id)
-					} else { await kill.sendFileFromUrl(from, reed.data.url, '', reed.data.title, id) }
-				}
-			} catch (error) {
-				await kill.reply(from, mess.noresult(), id)
-				console.log(color('[LYRICS]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
+        
 			
 		// Por Jon, updates KillovSky
 		case 'wallhaven':
@@ -3301,20 +2837,7 @@ module.exports = kconfig = async (kill, message) => {
 			}
             break
 			
-		// Por Tio das Trevas, updates KillovSky
-		case 'decode':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'binary code/código binario.', id)
-			const dbin = await axios.get(`https://some-random-api.ml/binary?decode=${encodeURIComponent(body.slice(8))}`)
-			await kill.reply(from, `*🤖1️⃣  =*\n\n${body.slice(8)}\n\n *= 📓✏️*\n\n${dbin.data.text}`, id)
-			break
-			
-		// Por Tio das Trevas, updates KillovSky
-		case 'encode':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'palavras/words/números/numbers.', id)
-			const cbin = await axios.get(`https://some-random-api.ml/binary?text=${encodeURIComponent(body.slice(8))}`)
-			await kill.reply(from, `*📓✏️ → *\n\n${body.slice(8)}\n\n*🤖1️⃣  → *\n\n${cbin.data.binary}`, id)
-			break
-			
+	
 			
 		case 'covid':
 			if (args.lenght == 0) return kill.reply(from, mess.coviderr(), id)
@@ -3328,24 +2851,7 @@ module.exports = kconfig = async (kill, message) => {
 			await kill.sendText(from, mess.covid())
 			break
 			
-			
-		case 'email':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'email | title/titulo | mensagem/message.' + '\n\n' + mess.argsbar() + 'use 2 "|".', id)
-			try {
-				await kill.reply(from, mess.wait(), id)
-				const emailsd = arg.split('|')[0]
-				const assuml = arg.split('|')[1]
-				const textoma = arg.split('|')[2]
-				const mails = await axios.get(`https://videfikri.com/api/spamemail/?email=${encodeURIComponent(emailsd)}&subjek=${encodeURIComponent(assuml)}&pesan=${encodeURIComponent(textoma)}`)
-				const mailres = mails.data.result
-				if (mailres.status == '200') {
-					await kill.reply(from, `✔️ - *📠 → *: ${mailres.target}\n\n*📧 → * ${mailres.subjek}\n\n*📋 → * ${mailres.pesan}`, id)
-				} else return kill.reply(from, mess.mails(), id)
-			} catch (error) {
-				await kill.reply(from, mess.mails(), id)
-				console.log(color('[EMAIL]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
+		
 			
 		case 'gtav':
             if (isMedia && type === 'image' || isQuotedImage) {
@@ -3372,13 +2878,7 @@ module.exports = kconfig = async (kill, message) => {
             break
 			
 			
-		case 'encurtar':
-		case 'tinyurl':
-			if (args.length == 0) return kill.reply(from, mess.nolink(), id)
-			const tinurl = await axios.get(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(args[0])}`)
-			if (tinurl.data == 'Error') return kill.reply(from, mess.nolink() + '\n\n' + mess.fail(), id)
-			await kill.reply(from, `${args[0]} → ${tinurl.data}`, id)
-			break
+		
 			
     
 		case 'signo':
@@ -3482,14 +2982,7 @@ module.exports = kconfig = async (kill, message) => {
 			})
 			break
 			
-			
-		case 'cosplay':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'nome/nombre/name.', id)
-			const plate = await axios.get(`https://rest.farzain.com/api/special/fansign/cosplay/cosplay.php?apikey=rambu&text=${encodeURIComponent(body.slice(9))}`, { responseType: 'arraybuffer' }).then(async (response) => {
-				const myplaye = Buffer.from(response.data, 'binary').toString('base64')
-				await kill.sendImageAsSticker(from, myplaye, { author: config.author, pack: config.pack, keepScale: true })
-			})
-			break
+		
 			
 			
 		case 'hitler':
@@ -3589,69 +3082,7 @@ module.exports = kconfig = async (kill, message) => {
 			}
 			break
 			
-			
-		case 'github':
-			if (args.length == 0) return kill.reply(from, mess.noargs() + 'github username', id)
-			await kill.reply(from, mess.wait(), id)
-			const gitData = await axios.get(`https://api.github.com/users/${args[0]}`)
-			const siteAdmin = (gitData.data.site_admin == false) ? 'Não' : gitData.data.site_admin
-			const companY = (gitData.data.company == null) ? 'Não' : gitData.data.company
-			const bloG = (gitData.data.blog == "") ? 'Não' : gitData.data.blog
-			const emaiL = (gitData.data.email == null) ? 'Não' : gitData.data.email
-			const tramPar = (gitData.data.hireable == null) ? 'Não' : gitData.data.hireable
-			if (gitData.data.message == 'Not Found') return kill.reply(from, mess.noresult(), id)
-			await kill.sendFileFromUrl(from, `${gitData.data.avatar_url}`, 'avatar.png', mess.github(siteAdmin, companY, bloG, emaiL, tramPar, gitData), id)
-			break
-			
-			
-		case 'roubar':
-			if (quotedMsg && quotedMsg.type == 'sticker' && arks.includes('|')) {
-				await kill.reply(from, mess.wait(), id)
-				const stickerMeta = await decryptMedia(quotedMsg)
-				const packName = arg.split('|')[0]
-				const authorName = arg.split('|')[1]
-				await kill.sendImageAsSticker(from, `data:${quotedMsg.mimetype};base64,${stickerMeta.toString('base64')}`, { author: authorName, pack: packName })
-			} else return kill.reply(from, mess.onlyst() + '\n\n' + mess.argsbar() + 'use 1 "|".', id)
-            break
-			
-		// Não deixe seus usuarios floodarem, caso contrario a bot pode desligar
-		case 'sound':
-		case 'bass':
-			if (isMedia && isAudio || isQuotedAudio || isPtt || isQuotedPtt) {
-				if (args.length == 1 && !isNaN(args[0])) {
-					try {
-						await kill.reply(from, mess.wait(), id)
-						const encryptMedia = isQuotedAudio || isQuotedPtt ? quotedMsg : message
-						const mediaData = await decryptMedia(encryptMedia, uaOverride)
-						await fs.writeFile(`./lib/media/audio/${user.replace('@c.us', '')}${lvpc}.mp3`, mediaData, (err) => {
-							if (err) return console.error(err)
-							console.log(color('[FFMPEG]', 'crimson'), color(`- Conversão de audio "Bass" pedida por → ${pushname} - Você pode ignorar.`, 'gold'))
-							ffmpeg(`./lib/media/audio/${user.replace('@c.us', '')}${lvpc}.mp3`)
-							.audioFilter(`equalizer=f=40:width_type=h:width=50:g=${args[0]}`) // Mexa somente aqui se quiser
-							.format('mp3')
-							.save(`./lib/media/audio/audio-${user.replace('@c.us', '')}${lvpc}.mp3`)
-							.on('error', async function (error, stdout, stderr) {
-								await kill.reply(from, mess.fail(), id)
-								console.log(color('[BASS]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-							})
-							.on('progress', function (progress) { console.log(`Progresso do Bass: ${progress.percent}% concluído.`) })
-							.on('end', async () => {
-								console.log(color('[FFMPEG]', 'crimson'), color(`- Conversão de audio "Bass" finalizada, enviando para → ${pushname} - Você pode ignorar...`, 'gold'))
-								await kill.sendFile(from, `./lib/media/audio/audio-${user.replace('@c.us', '')}${lvpc}.mp3`, 'audio.mp3', '', id)
-								setTimeout(() => {
-									fs.unlinkSync(`./lib/media/audio/audio-${user.replace('@c.us', '')}${lvpc}.mp3`)
-									fs.unlinkSync(`./lib/media/audio/${user.replace('@c.us', '')}${lvpc}.mp3`)
-								}, 30000)
-							})
-						})
-					} catch (error) {
-						await kill.reply(from, mess.fail(), id)
-						console.log(color('[BASS]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-					}
-				} else return kill.reply(from, mess.noargs() + 'quantidade de bass | bass quantity.', id)
-			} else return kill.reply(from, mess.onlyaudio(), id)
-			break
-			
+
 		// Não deixe seus usuarios floodarem, caso contrario a bot pode desligar
 		case 'nightcore':
 			if (isMedia && isAudio || isQuotedAudio || isPtt || isQuotedPtt) {
@@ -3722,28 +3153,7 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-		case 'cpf':
-			if (!config.lang == 'pt') return kill.reply(from, 'Brazil only/Brasil solamente!', id)
-			try {
-				if (args[0].length > 11) return kill.reply(from, 'cpf invalido.', id)
-				await kill.reply(from, mess.wait(), id)
-				const browsercf = await puppeteer.launch({ headless: true })
-				const pagecf = await browsercf.newPage()
-				await pagecf.goto("https://www.situacao-cadastral.com", { waitUntil: "networkidle2" }).then(async () => {
-					await pagecf.click("#form")
-					await pagecf.type("#doc", args[0])
-					await pagecf.click("#consultar")
-					await new Promise(resolve => setTimeout(resolve, 10000))
-					const divElementcf = await pagecf.$eval('div[id="resultado"] > span.dados.nome', txLogo => txLogo.textContent)
-					await kill.reply(from, `O dono desse CPF se chama ${divElementcf}.`, id)
-					browsercf.close()
-				})
-			} catch (error) {
-				await kill.reply(from, 'CPF não encontrado ou erros.', id)
-				console.log(color('[CPF]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
-			}
-			break
-			
+		
 			
 		case 'policia':
 			await kill.sendText(from, mess.policemenu())
