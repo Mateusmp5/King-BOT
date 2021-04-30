@@ -2441,6 +2441,10 @@ module.exports = kconfig = async (kill, message) => {
             await kill.sendText(from, mess.maker(pushname, time))
             break
 			
+	case 'updates':
+            await kill.sendText(from, mess.updates(pushname, time))
+            break		
+			
 	
 			
 			
