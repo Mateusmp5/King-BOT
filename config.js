@@ -2445,6 +2445,7 @@ module.exports = kconfig = async (kill, message) => {
             await kill.sendText(from, mess.updates(pushname, time))
             break		
 			
+			
 	
 			
 			
@@ -3160,7 +3161,7 @@ module.exports = kconfig = async (kill, message) => {
 		
 			
 		case 'policia':
-			await kill.sendText(from, mess.policemenu())
+			await kill.sendText(from, mess.policemenu(pushname, time))
 			break
 			
 			
