@@ -787,19 +787,22 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 			
-         case 'play':
-                reply(mess.wait)
-                play = body.slice(5)
-                anu = await fetchJson(`https://api.zeks.xyz/api/ytplaymp3?q=${play}&apikey=apivinz`)
-               if (anu.error) return reply(anu.error)
-                 infomp3 = `*MUSICA ENCONTRADA!!!*\nTítulo : ${anu.result.title}\nUrl : ${anu.result.source}\nTamanho : ${anu.result.size}\n\n*ESPERE UM POUQUINHO, N SPAME O CHAT*`
-                buffer = await getBuffer(anu.result.thumbnail)
-                lagu = await getBuffer(anu.result.url_audio)
-                client.sendMessage(from, buffer, image, {quoted: mek, caption: infomp3})
-                client.sendMessage(from, lagu, audio, {mimetype: 'audio/mp4', filename: `${anu.title}.mp3`, quoted: mek})
-                await limitAdd(sender)
-                break
 			
+        case 'play':
+            if (args.length == 0) return kill.reply(from, mess.noargs() + 'Títulos do YouTube/YouTube Titles.', id)
+			try {
+				const ytres = await ytsearch(`${body.slice(6)}`)
+				await kill.sendFileFromUrl(from, `${ytres.all[0].image}`, ``, mess.play(ytres), id)
+				const asize = await axios.get(`http://st4rz.herokuapp.com/api/yta?url=https://www.youtube.com/watch?v=${ytres.all[0].videoId}`)
+				const apeso = asize.data.filesize.replace(' MB', '')
+				if (apeso >= 16 || asize.data.filesize.endsWith('GB')) return kill.reply(from, mess.verybig(asize), id)
+				const asend = await axios.get(`http://st4rz.herokuapp.com/api/yta2?url=https://www.youtube.com/watch?v=${ytres.all[0].videoId}`)
+				await kill.sendFileFromUrl(from, `${asend.data.result}`, `${asend.data.title}.${asend.data.ext}`, `${asend.data.title}`, id)
+			} catch (error) {
+				await kill.reply(from, mess.serveroff(), id)
+				console.log(color('[PLAY]', 'crimson'), color(`→ Obtive erros no comando ${prefix}${command} → ${error.message} - Você pode ignorar.`, 'gold'))
+			}
+            break
 			
         case 'video':
             if (args.length == 0) return kill.reply(from, mess.noargs() + 'Títulos do YouTube/YouTube Titles.', id)
