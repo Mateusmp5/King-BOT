@@ -1093,13 +1093,21 @@ module.exports = kconfig = async (kill, message) => {
 
 
 			
+		case 'diamante':
+		case 'diamantes':
+		case 'dima':
+			await kill.sendText(from, mess.diamante(pushname, time))
+			break
 		
+		case 'referencia':
+		case 'referencias':			
+		case 'ref':
+			await kill.sendText(from, mess.referencia(pushname, time))
+			break
 		
-	
-		// Para usar a base remova o /* e o */ e bote um nome dentro das aspas da case e em seguida sua mensagem dentro das aspas na frente do from
-		/*case 'Nome do comando sem espaços':
-			await kill.reply(from, 'Sua mensagem', id)
-			break*/
+		case 'faq':
+			await kill.sendText(from, mess.faq(pushname, time))
+			break
 			
 			
         default:
