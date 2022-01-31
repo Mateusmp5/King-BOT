@@ -1109,6 +1109,9 @@ module.exports = kconfig = async (kill, message) => {
 			await kill.sendText(from, mess.faq(pushname, time))
 			break
 			
+		case 'outros':
+			await kill.sendText(from, mess.faq(pushname, time))
+			break			
 			
         default:
             if (isCmd) { await kill.reply(from, mess.nocmd(command), id) }
