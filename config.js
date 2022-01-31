@@ -1110,8 +1110,46 @@ module.exports = kconfig = async (kill, message) => {
 			break
 			
 		case 'outros':
-			await kill.sendText(from, mess.faq(pushname, time))
+			await kill.sendText(from, mess.outros(pushname, time))
 			break			
+			
+		/** INSTA **/
+		case 'seguidoresmundi':
+			await kill.sendText(from, mess.seguidoresmundi(pushname, time))
+			break	
+			
+		case 'seguidoresbr':
+			await kill.sendText(from, mess.seguidoresbr(pushname, time))
+			break
+		
+		case 'reels':
+			await kill.sendText(from, mess.faq(pushname, time))
+			break
+			
+		case 'reelslike':
+			await kill.sendText(from, mess.reelslike(pushname, time))
+			break
+			
+		case 'curtida':
+			await kill.sendText(from, mess.curtida(pushname, time))
+			break
+			
+		case 'storys':
+			await kill.sendText(from, mess.storys(pushname, time))
+			break
+		/** INSTA **/
+			
+		/** Tiktok **/
+		case 'segtitok':
+			await kill.sendText(from, mess.tiktok1(pushname, time))
+			break
+			
+		case 'liketitok':
+			await kill.sendText(from, mess.tiktok2(pushname, time))
+			break
+			
+			
+			
 			
         default:
             if (isCmd) { await kill.reply(from, mess.nocmd(command), id) }
