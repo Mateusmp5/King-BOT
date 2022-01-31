@@ -145,7 +145,7 @@ const start = async (kill = new Client()) => {
             await kill.contactBlock(callData.peerJid)
 			console.log(color('[CALL]', 'red'), color(`${callData.peerJid.replace('@c.us', '')} foi bloqueado por me ligar...`, 'yellow'))
         })
-   
+}
 
 // Cria uma sessão da Íris
 create(options(start)).then((kill) => start(kill)).catch((err) => console.error(err))
